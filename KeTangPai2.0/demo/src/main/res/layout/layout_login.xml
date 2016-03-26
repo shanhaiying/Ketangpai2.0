@@ -24,7 +24,8 @@
                     android:layout_marginTop="250dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Account"/>
+                    android:text="@string/Account"
+                    />
                 <EditText
                     android:id="@+id/account"
                     android:layout_width="match_parent"
@@ -47,6 +48,7 @@
                 />
         </TableRow>
         <Button
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
@@ -54,6 +56,7 @@
             android:layout_marginLeft="50dp"
             />
         <Button
+            android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"

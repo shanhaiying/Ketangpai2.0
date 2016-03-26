@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="60dp"
+            android:background="@drawable/banana_pic"
+            android:contentDescription="@string/profile_picture"/>
+    <RelativeLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center">
+            <TableRow android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginTop="250dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Account"/>
+                <EditText
+                    android:id="@+id/account"
+                    android:layout_width="match_parent"
+                    android:hint="@string/username_hint"
+                    android:layout_marginTop="250dp"
+                    />
+            </TableRow>
+        <TableRow android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+            <TextView
+                android:layout_marginTop="290dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password"/>
+            <EditText
+                android:id="@+id/pwdbox"
+                android:layout_width="match_parent"
+                android:layout_marginTop="290dp"
+                android:hint="@string/pwd_hint"
+                />
+        </TableRow>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_marginTop="340dp"
+            android:layout_marginLeft="50dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="340dp"/>
+        </RelativeLayout>
+
+</RelativeLayout>
+
+<!--             <TableRow android:gravity="center">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="@string/Account"/>
+                <EditText
+                    android:id="@+id/account"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username_hint"/>
+            </TableRow>
+            -->

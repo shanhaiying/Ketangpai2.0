@@ -13,10 +13,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_login);
+        setContentView(R.layout.layout_login_new);
         login = (Button)findViewById(R.id.login);
         register = (Button)findViewById(R.id.register);
-        //MyOnClickListener myOnClickListener = new MyOnClickListener();
         login.setOnClickListener(this);
         register.setOnClickListener(this);
     }
@@ -34,20 +33,4 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 break;
         }
     }
-    /*
-    class MyOnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v){
-            switch (v.getId()){
-                case R.id.login:
-                    Intent intent = new Intent(v.getContext(),BaseActivity.class);
-                    startActivity(intent);
-                case R.id.register:
-                    Intent intent = new Intent(v.getContext(),RegisterActivity.class);
-                    startActivity(intent);
-
-            }
-        }
-    }
-    */
 }

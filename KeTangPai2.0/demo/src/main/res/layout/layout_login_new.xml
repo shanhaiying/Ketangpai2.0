@@ -64,38 +64,18 @@
             android:layout_below="@id/password_edit"
             android:layout_alignRight="@id/password_edit"
             android:text="@string/login"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
         <Button
             android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:layout_marginLeft="15dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_toLeftOf="@+id/login"
+            android:layout_below="@+id/password_edit"
+            android:layout_marginRight="140dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
     </RelativeLayout>
 </LinearLayout>
-
-
-
-    <!--
-    <ImageView android:id="@+id/miniTwitter_logo"
-               android:src="@drawable/"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentRight="true"
-               android:layout_alignParentBottom="true"
-               android:layout_marginRight="25dp"
-               android:layout_marginLeft="10dp"
-               android:layout_marginBottom="25dp" />
-    <ImageView android:src="@drawable/logo"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_toLeftOf="@id/miniTwitter_logo"
-               android:layout_alignBottom="@id/miniTwitter_logo"
-               android:paddingBottom="8dp"/>
-               -->

@@ -8,19 +8,19 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/change_bar_black">
         <TextView
-            android:id="@+id/join_class"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="加入班级"
+            android:text="私信"
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="#fff"
             android:layout_marginLeft="15dp"/>
-        <ImageView
-            android:id="@+id/logout"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_logout"
+            android:text="忽略未读"
+            android:textSize="17sp"
+            android:textColor="#fff"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerInParent="true"
@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/course"
             android:text="课堂"
-            android:textColor="#002c58"
             android:textSize="@dimen/bottom_string_size"
             android:background="#646464"
             />
@@ -48,6 +47,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
             android:id="@+id/messages"
+            android:textColor="#002c58"
             android:background="#646464"
             android:text="私信"
             />
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
-            android:id="@+id/announcement"
+            android:id="@+id/information"
             android:background="#646464"
             android:text="通知"/>
         <Button

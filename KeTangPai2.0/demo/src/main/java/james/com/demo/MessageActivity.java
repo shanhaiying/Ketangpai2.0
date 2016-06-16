@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class BaseActivity extends Activity implements View.OnClickListener {
-    public static BaseActivity BaseActivity = null;
+public class MessageActivity extends Activity implements View.OnClickListener{
     Button course;
     Button message;
     Button announce;
@@ -19,7 +18,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_base);
+        setContentView(R.layout.layout_message);
         course = (Button)findViewById(R.id.course);
         message = (Button)findViewById(R.id.messages);
         announce = (Button)findViewById(R.id.announcement);

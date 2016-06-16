@@ -17,6 +17,10 @@
         </activity>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".BaseActivity"/>
+        <activity android:name=".ExitWindow"/>
+        <activity android:name=".AboutActivity"/>
+        <activity android:name=".AnnounceActivity"/>
+        <activity android:name=".MessageActivity"/>
     </application>
 
 </manifest>

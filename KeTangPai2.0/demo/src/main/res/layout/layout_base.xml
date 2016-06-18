@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/course"
+            android:id="@+id/course_base"
             android:text="课堂"
             android:textColor="#002c58"
             android:textSize="@dimen/bottom_string_size"
@@ -47,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
-            android:id="@+id/messages"
+            android:id="@+id/messages_base"
             android:background="#646464"
             android:text="私信"
             />
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
-            android:id="@+id/announcement"
+            android:id="@+id/announcement_base"
             android:background="#646464"
             android:text="通知"/>
         <Button
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:textSize="@dimen/bottom_string_size"
             android:layout_height="wrap_content"
-            android:id="@+id/about"
+            android:id="@+id/about_base"
             android:background="#646464"
             android:text="关于"/>
     </LinearLayout>

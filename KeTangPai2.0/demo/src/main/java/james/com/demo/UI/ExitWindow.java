@@ -1,4 +1,4 @@
-package james.com.demo;
+package james.com.demo.UI;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import james.com.demo.R;
 
 public class ExitWindow extends Activity {
         private LinearLayout layout;
@@ -36,6 +38,17 @@ public class ExitWindow extends Activity {
 
         public void exitbutton0(View v) {
             this.finish();//关闭弹框
-            BaseActivity.BaseActivity.finish();//关闭MainActivity
+            if (BaseActivity.BaseActivity != null){
+                BaseActivity.BaseActivity.finish();//关闭MainActivity
+            }
+            if ( MessageActivity.MessageActivity != null){
+                MessageActivity.MessageActivity.finish();
+            }
+            if (AnnounceActivity.AnnounceActivity != null){
+                AnnounceActivity.AnnounceActivity.finish();
+            }
+            if (AboutActivity.AboutActivity != null) {
+                AboutActivity.AboutActivity.finish();
+            }
         }
 }

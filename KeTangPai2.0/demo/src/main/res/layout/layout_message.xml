@@ -16,6 +16,7 @@
             android:textColor="#fff"
             android:layout_marginLeft="15dp"/>
         <TextView
+            android:id="@+id/ignore_unread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="忽略未读"
@@ -56,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
-            android:id="@+id/information"
+            android:id="@+id/announcement"
             android:background="#646464"
             android:text="通知"/>
         <Button

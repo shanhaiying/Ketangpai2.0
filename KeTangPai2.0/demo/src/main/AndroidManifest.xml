@@ -8,19 +8,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".UI.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".BaseActivity"/>
-        <activity android:name=".ExitWindow"/>
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".AnnounceActivity"/>
-        <activity android:name=".MessageActivity"/>
+        <activity android:name=".UI.RegisterActivity"/>
+        <activity android:name=".UI.BaseActivity"/>
+        <activity android:name=".UI.ExitWindow"/>
+        <activity android:name=".UI.AboutActivity"/>
+        <activity android:name=".UI.AnnounceActivity"/>
+        <activity android:name=".UI.MessageActivity"/>
     </application>
 
 </manifest>

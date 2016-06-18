@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bottom_string_size"
-            android:id="@+id/information"
+            android:id="@+id/announcement"
             android:textColor="#002c58"
             android:background="#646464"
             android:text="通知"/>

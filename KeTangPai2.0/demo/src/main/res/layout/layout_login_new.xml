@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_login_background">
+    android:layout_height="match_parent">
     <!-- padding 内边距   layout_margin 外边距
   		android:layout_alignParentTop 布局的位置是否处于顶部 -->
 
@@ -12,7 +11,7 @@
         android:id="@+id/head_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/loge"
+        android:background="@drawable/logo"
         android:contentDescription="it's your head picture"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"/>
@@ -30,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_below="@id/head_picture"
             android:layout_marginTop="5dp"
             android:text="@string/Account"/>
         <EditText
@@ -69,9 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:layout_toLeftOf="@+id/login"
             android:layout_below="@+id/password_edit"
-            android:layout_marginRight="140dp"/>
+            android:layout_alignParentLeft="true"/>
     </RelativeLayout>
 
     <RelativeLayout

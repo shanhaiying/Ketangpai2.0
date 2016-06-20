@@ -1,2 +1,2 @@
-# My-second-Android-App
+# Hello there
 Application-for-check-absence

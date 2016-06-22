@@ -14,9 +14,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -38,6 +42,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     RequestQueue mQueue;
     Gson gson;
     String result;
+    Student studentJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +52,10 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.3.116.146:8000/testdb/", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("TAG", response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG", error.getMessage(), error);
-                    }
-                })
-                {/*
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("params1", "value1");
-                        map.put("params2", "value2");
-                        return map;
-                    }
-                    */
-                };
-                mQueue.add(stringRequest);
+                getJson();
             }
         });
+
         testJson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,5 +127,50 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 startActivity(intent3);
                 break;
         }
+    }
+
+    private void getJson() {
+
+
+        String url = "http://10.2.220.12:8000/json/";
+
+        JsonObjectRequest jsonObjectRequest;
+        JSONObject jsonObject = null;
+        try
+        {
+            jsonObject = new JSONObject("{name:james,id:11111,date:2014}");
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+//打印前台向后台要提交的post数据
+        Log.d("post", jsonObject != null ? jsonObject.toString() : null);
+
+//发送post请求
+        try
+        {
+            jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST, url, jsonObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //打印请求后获取的json数据
+                            Log.d("bbb", response.toString());
+
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError arg0) {
+                    Log.d("aaa", arg0.toString());
+                }
+            });
+            mQueue.add(jsonObjectRequest);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println(e + "");
+        }
+        mQueue.start();
     }
 }

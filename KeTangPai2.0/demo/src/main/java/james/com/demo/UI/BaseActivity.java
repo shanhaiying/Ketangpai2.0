@@ -35,40 +35,16 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     Button message;
     Button announce;
     Button about;
-    Button testJson;
     TextView joinClass;
     ImageView logout;
-    Button send;
     RequestQueue mQueue;
     Gson gson;
-    String result;
-    Student studentJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base);
         initWidget();
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getJson();
-            }
-        });
-
-        testJson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gson = new Gson();
-                Student student = new Student();
-                student.setDate(100);
-                student.setID(201501);
-                student.setName("helloworld");
-                result = gson.toJson(student);
-                Log.d("TAG", result);
-
-            }
-        });
     }
 
     public void initWidget() {
@@ -86,8 +62,6 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         about.setOnClickListener(this);
         joinClass.setOnClickListener(this);
         logout.setOnClickListener(this);
-        send = (Button) findViewById(R.id.send);
-        testJson = (Button) findViewById(R.id.json);
     }
 
     public void onBackPressed() {
@@ -127,50 +101,5 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 startActivity(intent3);
                 break;
         }
-    }
-
-    private void getJson() {
-
-
-        String url = "http://10.3.116.146:8000/json/";
-
-        JsonObjectRequest jsonObjectRequest;
-        JSONObject jsonObject = null;
-        try
-        {
-            jsonObject = new JSONObject("{name:james,id:11111,date:2014}");
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-//打印前台向后台要提交的post数据
-        Log.d("post", jsonObject != null ? jsonObject.toString() : null);
-
-//发送post请求
-        try
-        {
-            jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.POST, url, jsonObject,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            //打印请求后获取的json数据
-                            Log.d("bbb", response.toString());
-
-                        }
-
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError arg0) {
-                    Log.d("aaa", arg0.toString());
-                }
-            });
-            mQueue.add(jsonObjectRequest);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println(e + "");
-        }
-        mQueue.start();
     }
 }

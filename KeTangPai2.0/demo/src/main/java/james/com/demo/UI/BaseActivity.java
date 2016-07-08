@@ -132,7 +132,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     private void getJson() {
 
 
-        String url = "http://10.2.220.12:8000/json/";
+        String url = "http://10.3.116.146:8000/json/";
 
         JsonObjectRequest jsonObjectRequest;
         JSONObject jsonObject = null;

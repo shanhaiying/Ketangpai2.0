@@ -16,30 +16,55 @@
                 android:layout_marginTop="150dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID"/>
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/Account"/>
             <EditText
-                android:id="@+id/account"
+                android:id="@+id/username_edit"
                 android:layout_width="match_parent"
-                android:hint="Input your ID"
+                android:hint="Input your Account"
                 android:layout_marginTop="150dp"
+                android:gravity="center"
                 />
         </TableRow>
         <TableRow android:layout_width="match_parent"
                   android:layout_height="match_parent">
             <TextView
                 android:layout_marginTop="190dp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:text="@string/password"/>
             <EditText
-                android:id="@+id/pwdbox"
+                android:id="@+id/password_edit"
                 android:layout_width="match_parent"
                 android:layout_marginTop="190dp"
                 android:hint="@string/pwd_hint"
+                android:inputType="textPassword"
+                android:gravity="center"
+                />
+        </TableRow>
+        <TableRow android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+            <TextView
+                android:layout_marginTop="230dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Confirm"/>
+            <EditText
+                android:id="@+id/confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_marginTop="230dp"
+                android:inputType="textPassword"
+                android:hint="Input your password again"
+                android:gravity="center"
                 />
         </TableRow>
         <Button
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"

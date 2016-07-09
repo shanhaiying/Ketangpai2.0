@@ -3,13 +3,16 @@ package james.com.demo.UI;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,6 +37,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     EditText mPassword;
     EditText mUsername;
     RequestQueue mQueue;
+    CheckBox rememberPassword;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
     private final int RETURN_SYMBOL = 1;
     private String signal = "result";//存储服务器端返回的结果
     public static LoginActivity loginActivity = null;
@@ -41,10 +47,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login_new);
-        login = (Button)findViewById(R.id.login);
-        register = (Button)findViewById(R.id.register);
-        mUsername = (EditText)findViewById(R.id.username_edit);
-        mPassword = (EditText)findViewById(R.id.password_edit);
+        initWidget();
+        boolean isRemember = pref.getBoolean("remember_password",false);
+        if (isRemember){
+            String username = pref.getString("username","");
+            String password = pref.getString("password","");
+            mUsername.setText(username);
+            mPassword.setText(password);
+            rememberPassword.setChecked(true);
+        }
         login.setOnClickListener(this);
         register.setOnClickListener(this);
     }
@@ -97,7 +108,25 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 if (answer == null){
                     Toast.makeText(loginActivity,"网络问题",Toast.LENGTH_SHORT).show();
                 }else if (answer.equals("success")){
+                    //在成功的情况下 如果账号相等而密码不等 则将正确的密码写入
+                    if (rememberPassword.isChecked()){
+                        editor.putBoolean("remember_password",true);
+                        editor.apply();
+                    }else {
+                        editor.putBoolean("remember_password",false);
+                        editor.apply();
+                    }
                     Toast.makeText(loginActivity,"登录成功",Toast.LENGTH_SHORT).show();
+                    if (pref.getString("username","").equals(username)){//账号相等
+                        if (!pref.getString("password","").equals(password)){//密码不等
+                            editor.putString("password", password);
+                            editor.apply();
+                        }
+                    }else {//若是不同账号则直接把新的账号密码存入
+                        editor.putString("username",username);
+                        editor.putString("password",password);
+                        editor.apply();
+                    }
                     Intent intent = new Intent(loginActivity,BaseActivity.class);
                     startActivity(intent);
                     finish();
@@ -136,7 +165,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    //打印请求后获取的json数据
+                                    //发送jsonObject 并在返回成功的回调里处理结果
                                     try
                                     {
                                         signal = response.getString("result");
@@ -169,5 +198,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 mQueue.start();
             }
         }).start();
+    }
+    private void initWidget(){
+        login = (Button)findViewById(R.id.login);
+        register = (Button)findViewById(R.id.register);
+        mUsername = (EditText)findViewById(R.id.username_edit);
+        mPassword = (EditText)findViewById(R.id.password_edit);
+        rememberPassword = (CheckBox)findViewById(R.id.remember_password);
+        pref = getSharedPreferences("login_data", MODE_PRIVATE);
+        editor = getSharedPreferences("login_data",MODE_PRIVATE).edit();
     }
 }

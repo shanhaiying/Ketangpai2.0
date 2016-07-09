@@ -55,11 +55,23 @@
             android:singleLine="true"
             android:inputType="textPassword" />
         <!-- 登录button -->
+            <CheckBox
+                android:layout_below="@+id/password_edit"
+                android:layout_width="wrap_content"
+                android:id="@+id/remember_password"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:gravity="center"
+                android:layout_toRightOf="@+id/remember_password"
+                android:layout_below="@+id/password_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="32sp"
+                android:text="Remember password"/>
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/password_edit"
+            android:layout_below="@id/remember_password"
             android:layout_alignRight="@id/password_edit"
             android:text="@string/login"/>
         <Button
@@ -67,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:layout_below="@+id/password_edit"
+            android:layout_below="@+id/remember_password"
             android:layout_alignParentLeft="true"/>
     </RelativeLayout>
 

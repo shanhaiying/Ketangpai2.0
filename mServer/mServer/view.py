@@ -40,29 +40,44 @@ def json(request):
 from django.core import serializers
 def check(request):
 	if request.method == 'POST':
-		temp = simplejson.loads(request.body)
-		musername = temp["username"]
-		mpassword = temp["password"]
+		recv = simplejson.loads(request.body)
+		musername = recv["username"]
+		mpassword = recv["password"]
 		try:
 			key = Account.objects.get(username = musername).__unicode__()
 		except Account.DoesNotExist:
 			dict = {}
 			dict["result"] = "not_exist"
-			ret = simplejson.dumps(dict)
 			return JsonResponse(dict)#账号不存在
 		if str(key) == str(mpassword):
 			dict = {}
 			dict["result"] = "success"
-			ret = simplejson.dumps(dict)
 			return JsonResponse(dict)#登录成功
 		else:
 			dict = {}
 			dict["result"] = "error"
-			ret = simplejson.dumps(dict)
 			return JsonResponse(dict)#密码不正确
 	else:
 		return HttpResponse("Working")
 		
-	
+		
+def register(request):
+	if request.method == 'POST':
+		recv = simplejson.loads(request.body)
+		musername = recv["username"]
+		mpassword = recv["password"]
+		try:
+			key = Account.objects.get(username = musername).__unicode__()
+			dict = {}
+			dict["result"] = "already_exist"
+			return JsonResponse(dict)
+		except Account.DoesNotExist:
+			account = Account(username = musername,password = mpassword)
+			account.save()
+			dict = {}
+			dict["result"] = "success"
+			return JsonResponse(dict)
+	else:
+		return HttpResponse("Working")
 
 

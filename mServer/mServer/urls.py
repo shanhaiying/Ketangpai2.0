@@ -30,6 +30,7 @@ urlpatterns = [
 	url(r'^testCon/',include('testCon.urls')),
         url(r'^json/',view.json,name = 'json'),
 	url(r'^check/',view.check,name = 'check'),
+	url(r'^register/',view.register,name = 'register'),
 ]
 
 

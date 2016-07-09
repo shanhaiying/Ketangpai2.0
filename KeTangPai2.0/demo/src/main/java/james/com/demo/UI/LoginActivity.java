@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import james.com.demo.Data.URL;
 import james.com.demo.R;
 import james.com.demo.Util.Utils;
 
@@ -48,6 +48,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login_new);
         initWidget();
+        //以下为记住密码功能
         boolean isRemember = pref.getBoolean("remember_password",false);
         if (isRemember){
             String username = pref.getString("username","");
@@ -59,30 +60,42 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         login.setOnClickListener(this);
         register.setOnClickListener(this);
     }
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId())
+        {
             case R.id.login:
                 Loginresult();
                 break;
             case R.id.register:
-                Intent intent2 = new Intent(v.getContext(),RegisterActivity.class);
+                Intent intent2 = new Intent(v.getContext(), RegisterActivity.class);
                 startActivity(intent2);
                 finish();
                 break;
         }
     }
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+        /*
+    登录:
+    1.无网络连接
+    2.帐号密码长度不合法
+    3.登录成功
+    4.账号不存在
+    5.密码错误
+    6.服务器错误
+    7.未知错误
+     */
     public void Loginresult(){
         loginActivity = this;
         username = mUsername.getText().toString();
         password = mPassword.getText().toString();
-        /*
-        1代表成功
-        -1代表账号不存在
-        -2代表密码错误
-        -3代表连接问题
-        -4代表未知错误
-         */
+        if (username.length() < 6 | username.length() > 20){//用户名长度检测
+            Toast.makeText(loginActivity,"用户名长度不合法,应在6-20个字符之间",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6 | password.length() > 20){//密码长度检测
+            Toast.makeText(loginActivity,"密码长度不合法,应在6-20个字符之间",Toast.LENGTH_SHORT).show();
+            mPassword.setText("");//清空密码输入框
+            return;
+        }
         Log.d("TAG", password);
         if (!Utils.isNetworkAvailable(loginActivity)){
             Toast.makeText(loginActivity,"网络不可用",Toast.LENGTH_SHORT).show();
@@ -94,6 +107,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         }
         checkPassword();
     }
+
     public void checkPassword() {
         final Handler handler = new Handler() {
             @Override
@@ -106,7 +120,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                     answer = bundle.getString("result");
                 }
                 if (answer == null){
-                    Toast.makeText(loginActivity,"网络问题",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(loginActivity,"未知错误",Toast.LENGTH_SHORT).show();
                 }else if (answer.equals("success")){
                     //在成功的情况下 如果账号相等而密码不等 则将正确的密码写入
                     if (rememberPassword.isChecked()){
@@ -142,10 +156,12 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 }
             }
         };
+        /*
+        网络请求的线程,将服务器返回的结果传给handler
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://10.3.116.146:8000/check/";
                 mQueue = Volley.newRequestQueue(LoginActivity.loginActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
@@ -161,7 +177,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 try
                 {
                     jsonRequest = new JsonObjectRequest(
-                            Request.Method.POST, url, jsonObject,
+                            Request.Method.POST, URL.URL_LOGIN, jsonObject,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -199,6 +215,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             }
         }).start();
     }
+    //控件初始化
     private void initWidget(){
         login = (Button)findViewById(R.id.login);
         register = (Button)findViewById(R.id.register);

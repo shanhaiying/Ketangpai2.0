@@ -36,7 +36,7 @@ public class ClassAdapter extends ArrayAdapter<ClassInfo> {
             String colorset[] = {"color_brown","color_green","color_points","color_purple","color_wood"};
             Random random = new Random();
             String certainColor = colorset[random.nextInt(4)];
-            switch (random.nextInt(4)){
+            switch (random.nextInt(5)){
             //switch (3){
                 case 0:
                     viewHolder.className.setBackground(r.getDrawable(R.drawable.color_cloth));
@@ -56,6 +56,10 @@ public class ClassAdapter extends ArrayAdapter<ClassInfo> {
                     break;
                 case 4:
                     viewHolder.className.setBackground(r.getDrawable(R.drawable.color_wood));
+                    //viewHolder.teacherName.setBackground(r.getDrawable(R.drawable.color_wood));
+                    break;
+                case 5:
+                    viewHolder.className.setBackground(r.getDrawable(R.drawable.color_blue));
                     //viewHolder.teacherName.setBackground(r.getDrawable(R.drawable.color_wood));
                     break;
             }

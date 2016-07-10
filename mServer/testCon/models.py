@@ -20,3 +20,9 @@ class Account(models.Model):
 	username = models.CharField(max_length = 20)
 	def __unicode__(self):
 		return self.password
+		
+class ClassInfo(models.Model):
+	className = models.CharField(max_length = 20)
+	teacherName = models.CharField(max_length = 10)
+	def __unicode__(self):
+		return self.className

@@ -25,3 +25,8 @@
 * remember password
 
 * register(save in the db)
+
+### Jul 10, 2016
+*the following Activity has been updated:*
+
+* BaseActivity  *(listview added)*

@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <RelativeLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
@@ -26,6 +27,14 @@
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_above="@id/base_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_bar">
+        
+    </ListView>
     <LinearLayout
         android:id="@+id/base_layout"
         android:layout_width="match_parent"

@@ -3,30 +3,21 @@ package james.com.demo.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import james.com.demo.Data.Student;
+import james.com.demo.Data.*;
 import james.com.demo.R;
 
 public class BaseActivity extends Activity implements View.OnClickListener {
@@ -38,13 +29,24 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     TextView joinClass;
     ImageView logout;
     RequestQueue mQueue;
-    Gson gson;
+    private List<ClassInfo> classList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base);
         initWidget();
+        initClassInfo();
+        ClassAdapter adapter = new ClassAdapter(BaseActivity.this,R.layout.class_item,classList);
+        ListView listView = (ListView)findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ClassInfo classInfo = classList.get(position);
+                Toast.makeText(BaseActivity.this,classInfo.getClassName(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void initWidget() {
@@ -67,6 +69,21 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     public void onBackPressed() {
         Intent intent = new Intent(this, ExitWindow.class);
         startActivity(intent);
+    }
+    /*
+    管理课程信息
+     */
+    private void initClassInfo(){
+        ClassInfo Android = new ClassInfo("Android","James");
+        classList.add(Android);
+        ClassInfo Python = new ClassInfo("Python","James");
+        classList.add(Python);
+        ClassInfo Linux = new ClassInfo("Linux","James");
+        classList.add(Linux);
+        ClassInfo Assembly = new ClassInfo("Assemble","James");
+        classList.add(Assembly);
+        ClassInfo HeadFirst = new ClassInfo("HeadFirst","James");
+        classList.add(HeadFirst);
     }
 
     public void onClick(View v) {

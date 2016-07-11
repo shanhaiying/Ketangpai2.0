@@ -35,4 +35,6 @@
 *the following function has been added:*
 
 * encrypt the sending data with MD5
+(password encrypt as MD5 before sending to the server and saved as MD5 in the database)
+
 * role added : Teacher

@@ -121,7 +121,10 @@ public class RegisterActivity extends Activity{
                 mQueue = Volley.newRequestQueue(RegisterActivity.registerActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
-                encryptPassword = MD5.getMD5(password);
+                /*
+                加盐 两次MD5 增加破解难度
+                 */
+                encryptPassword = MD5.getMD5(MD5.getMD5("hello" + password + "world"));
                 try
                 {
                     jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");

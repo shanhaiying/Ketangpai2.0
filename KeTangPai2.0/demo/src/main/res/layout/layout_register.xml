@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="230dp"
                 android:inputType="textPassword"
-                android:hint="Input your password again"
+                android:hint="Input password again"
                 android:gravity="center"
                 />
         </TableRow>

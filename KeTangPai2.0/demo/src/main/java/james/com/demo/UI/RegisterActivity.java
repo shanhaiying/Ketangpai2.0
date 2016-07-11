@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import james.com.demo.Data.URL;
 import james.com.demo.R;
+import james.com.demo.Util.MD5;
 import james.com.demo.Util.Utils;
 
 public class RegisterActivity extends Activity{
@@ -35,6 +36,7 @@ public class RegisterActivity extends Activity{
     String password;
     String confirm;
     String signal;
+    String encryptPassword;
     final int SUCCESS_SYMBOL = 1;
     public static RegisterActivity registerActivity;
     @Override
@@ -119,9 +121,10 @@ public class RegisterActivity extends Activity{
                 mQueue = Volley.newRequestQueue(RegisterActivity.registerActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
+                encryptPassword = MD5.getMD5(password);
                 try
                 {
-                    jsonObject = new JSONObject("{username:" + username + ",password:" + password + "}");
+                    jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");
                     Log.d("Sending_Message", jsonObject.toString());
                 } catch (Exception e)
                 {

@@ -25,8 +25,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.NoSuchAlgorithmException;
+
 import james.com.demo.Data.URL;
 import james.com.demo.R;
+import james.com.demo.Util.MD5;
 import james.com.demo.Util.Utils;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
@@ -40,6 +43,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     CheckBox rememberPassword;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    String encryptPassword;
     private final int RETURN_SYMBOL = 1;
     private String signal = "result";//存储服务器端返回的结果
     public static LoginActivity loginActivity = null;
@@ -69,7 +73,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             case R.id.register:
                 Intent intent2 = new Intent(v.getContext(), RegisterActivity.class);
                 startActivity(intent2);
-                finish();
                 break;
         }
     }
@@ -165,9 +168,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 mQueue = Volley.newRequestQueue(LoginActivity.loginActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
+                encryptPassword = MD5.getMD5(password);
                 try
                 {
-                    jsonObject = new JSONObject("{username:" + username + ",password:" + password + "}");
+                    jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");
                     Log.d("Sending_Message", jsonObject.toString());
                 } catch (Exception e)
                 {

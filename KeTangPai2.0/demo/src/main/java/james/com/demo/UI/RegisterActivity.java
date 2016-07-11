@@ -47,7 +47,7 @@ public class RegisterActivity extends Activity{
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tryRegister();
+                tryRegister_Student();
             }
         });
     }
@@ -68,7 +68,7 @@ public class RegisterActivity extends Activity{
     5.用户名已存在
     6.注册成功
      */
-    private void tryRegister(){
+    private void tryRegister_Student(){
         if (!Utils.isNetworkAvailable(registerActivity)){
             Toast.makeText(registerActivity, "网络不可用", Toast.LENGTH_SHORT).show();
         }
@@ -134,7 +134,7 @@ public class RegisterActivity extends Activity{
                 try
                 {
                     jsonRequest = new JsonObjectRequest(
-                            Request.Method.POST, URL.URL_REGISTER, jsonObject,
+                            Request.Method.POST, URL.URL_REGISTER_STUDENT, jsonObject,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {

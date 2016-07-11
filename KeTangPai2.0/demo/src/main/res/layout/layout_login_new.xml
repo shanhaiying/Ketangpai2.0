@@ -62,11 +62,26 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:gravity="center"
+                android:id="@+id/remember_text"
                 android:layout_toRightOf="@+id/remember_password"
                 android:layout_below="@+id/password_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="32sp"
                 android:text="Remember password"/>
+        <CheckBox
+            android:layout_below="@+id/password_edit"
+            android:layout_width="wrap_content"
+            android:id="@+id/identity"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/remember_text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="32sp"
+            android:layout_toRightOf="@+id/identity"
+            android:layout_below="@id/password_edit"
+            android:gravity="center"
+            android:text="Teacher"/>
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"

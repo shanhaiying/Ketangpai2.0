@@ -1,10 +1,8 @@
 package james.com.demo.UI;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,8 +23,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.NoSuchAlgorithmException;
-
 import james.com.demo.Data.URL;
 import james.com.demo.R;
 import james.com.demo.Util.MD5;
@@ -44,6 +40,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     String encryptPassword;
+    CheckBox isTeacher;
     private final int RETURN_SYMBOL = 1;
     private String signal = "result";//存储服务器端返回的结果
     public static LoginActivity loginActivity = null;
@@ -61,6 +58,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             mPassword.setText(password);
             rememberPassword.setChecked(true);
         }
+        boolean teacherNot = pref.getBoolean("isTeacher",false);
+        if (teacherNot){
+            isTeacher.setChecked(true);
+        }
         login.setOnClickListener(this);
         register.setOnClickListener(this);
     }
@@ -68,7 +69,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.login:
-                Loginresult();
+                loginResult();
                 break;
             case R.id.register:
                 Intent intent2 = new Intent(v.getContext(), RegisterActivity.class);
@@ -86,7 +87,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     6.服务器错误
     7.未知错误
      */
-    public void Loginresult(){
+    public void loginResult(){
         loginActivity = this;
         username = mUsername.getText().toString();
         password = mPassword.getText().toString();
@@ -129,8 +130,17 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                     if (rememberPassword.isChecked()){
                         editor.putBoolean("remember_password",true);
                         editor.apply();
-                    }else {
-                        editor.putBoolean("remember_password",false);
+                    }else
+                    {
+                        editor.putBoolean("remember_password", false);
+                        editor.apply();
+                    }
+                    //在成功的情况下 记住isTeacher的选择
+                    if (isTeacher.isChecked()){
+                        editor.putBoolean("isTeacher",true);
+                        editor.apply();
+                    }else{
+                        editor.putBoolean("isTeacher",false);
                         editor.apply();
                     }
                     Toast.makeText(loginActivity,"登录成功",Toast.LENGTH_SHORT).show();
@@ -177,43 +187,83 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 {
                     e.printStackTrace();
                 }
-//发送post请求
-                try
-                {
-                    jsonRequest = new JsonObjectRequest(
-                            Request.Method.POST, URL.URL_LOGIN, jsonObject,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    //发送jsonObject 并在返回成功的回调里处理结果
-                                    try
-                                    {
-                                        signal = response.getString("result");
-                                        Log.d("Response_Message", response.toString());
-                                        Log.d("Extract_result", signal);
-                                        Message msg = new Message();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("result", signal);
-                                        msg.setData(bundle);
-                                        msg.what = RETURN_SYMBOL;
-                                        handler.sendMessage(msg);
-                                    } catch (JSONException e)
-                                    {
-                                        e.printStackTrace();
+            //发送post请求 以下为学生的情况
+                if (!isTeacher.isChecked()){
+                    try
+                    {
+                        jsonRequest = new JsonObjectRequest(
+                                Request.Method.POST, URL.URL_LOGIN_STUDENT, jsonObject,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        //发送jsonObject 并在返回成功的回调里处理结果
+                                        try
+                                        {
+                                            signal = response.getString("result");
+                                            Log.d("Response_Message", response.toString());
+                                            Log.d("Extract_result", signal);
+                                            Message msg = new Message();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("result", signal);
+                                            msg.setData(bundle);
+                                            msg.what = RETURN_SYMBOL;
+                                            handler.sendMessage(msg);
+                                        } catch (JSONException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
 
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError arg0) {
-                            Log.d("Failure_Message", arg0.toString());
-                        }
-                    });
-                    mQueue.add(jsonRequest);
-                    Log.d("The_Whole_JsonRequest", jsonRequest.toString());
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError arg0) {
+                                Log.d("Failure_Message", arg0.toString());
+                            }
+                        });
+                        mQueue.add(jsonRequest);
+                        Log.d("The_Whole_JsonRequest", jsonRequest.toString());
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }else {//老师的情况
+                    try
+                    {
+                        jsonRequest = new JsonObjectRequest(
+                                Request.Method.POST, URL.URL_LOGIN_TEACHER, jsonObject,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        //发送jsonObject 并在返回成功的回调里处理结果
+                                        try
+                                        {
+                                            signal = response.getString("result");
+                                            Log.d("Response_Message", response.toString());
+                                            Log.d("Extract_result", signal);
+                                            Message msg = new Message();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("result", signal);
+                                            msg.setData(bundle);
+                                            msg.what = RETURN_SYMBOL;
+                                            handler.sendMessage(msg);
+                                        } catch (JSONException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError arg0) {
+                                Log.d("Failure_Message", arg0.toString());
+                            }
+                        });
+                        mQueue.add(jsonRequest);
+                        Log.d("The_Whole_JsonRequest", jsonRequest.toString());
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
                 mQueue.start();
             }
@@ -228,5 +278,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         rememberPassword = (CheckBox)findViewById(R.id.remember_password);
         pref = getSharedPreferences("login_data", MODE_PRIVATE);
         editor = getSharedPreferences("login_data",MODE_PRIVATE).edit();
+        isTeacher = (CheckBox)findViewById(R.id.identity);
     }
 }

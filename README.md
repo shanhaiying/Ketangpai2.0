@@ -30,3 +30,9 @@
 *the following Activity has been updated:*
 
 * BaseActivity  *(listview added)*
+
+### Jul 11, 2016
+*the following function has been added:*
+
+* encrypt the sending data with MD5
+* role added : Teacher

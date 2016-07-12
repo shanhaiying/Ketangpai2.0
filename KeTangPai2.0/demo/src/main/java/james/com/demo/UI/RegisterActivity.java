@@ -26,6 +26,7 @@ import james.com.demo.R;
 import james.com.demo.Util.MD5;
 import james.com.demo.Util.Utils;
 
+//教师注册功能暂不开放
 public class RegisterActivity extends Activity{
     Button register;
     EditText mUsername;

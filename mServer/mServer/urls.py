@@ -17,20 +17,18 @@ Including another URLconf
 from django.conf.urls import *
 from django.contrib import admin
 from mServer.view import hello
-from mServer.view import test
-from mServer.view import testdb
 from testCon.views import staff
 from . import view
 
 urlpatterns = [
     url(r'^hello/$',view.hello,name = 'hello'),
-	url(r'^testdb/$',view.testdb,name = 'testdb'),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^fff/$',view.fff,name = 'fff'),
 	url(r'^testCon/',include('testCon.urls')),
-        url(r'^json/',view.json,name = 'json'),
 	url(r'^check/',view.check,name = 'check'),
 	url(r'^register/',view.register,name = 'register'),
+	url(r'^register_teacher/',view.register_teacher,name = 'register_teacher'),
+	url(r'^check_teacher/',view.check_teacher,name = 'check_teacher'),
 ]
 
 

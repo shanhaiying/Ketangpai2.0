@@ -7,6 +7,12 @@ from django.db import models
 
 # Create your models here.
 
+'''
+学院派会告诉你在设计的时候把应该有的约束都加上
+
+而实践派得出的结论是主键一定加，非空约束尽量加，外键最好依赖于程序逻辑，而不是数据库，从而更好的拥抱变化，快速响应，数据库也会有相对较好的性能
+'''
+
 #以下是学生登录信息表
 #主要信息有 1.账号  2.密码
 class Account(models.Model):
@@ -36,7 +42,7 @@ class Account_Teacher(models.Model):
 #下面是学生个人信息表
 #主要信息有 1.账号信息(外键) 2.学生姓名 3.出生日期 4.所属班级 5.性别 6.学号
 class Student_Info(models.Model):
-	username = models.ForeignKey('Account','username')
+	username = models.CharField(max_length = 20)
 	StuName = models.CharField(max_length = 20)
 	Birthday = models.DateField()	#date_joined=date(1962, 8, 16)
 	ClassBelong = models.CharField(max_length = 20)
@@ -56,8 +62,8 @@ class Student_Info(models.Model):
 #下面是学生选课信息表
 #主要信息有 1.学生账号信息(外键) 2.学生归属课程(外键)
 class Course_Pick(models.Model):
-	StuId = models.ForeignKey('Student_Info','StuId')
-	className = models.ForeignKey('ClassInfo','className')
+	StuId = models.CharField(max_length = 20)
+	className = models.CharField(max_length = 30)
 	def getStuId(self):
 		return self.StuId
 	def getClassName(self):

@@ -8,18 +8,7 @@ from testCon.models import Account
 from testCon.models import Account_Teacher
 import simplejson
 import json
-def hello(request):
-    return HttpResponse("HelloWorld")
-
-def fff(request):
-    data = {"name":"james","age":"12"}
-    context = {}
-    context['test'] = "test"
-    context['hello'] = "HelloWorld"
-    context['name'] = (eval(JsonResponse(data).content))['name']
-    context['age'] = (eval(JsonResponse(data).content))['age']
-    return render(request,"hello.html",context)
-		
+	
 from django.core import serializers
 #学生的登录验证
 def check(request):

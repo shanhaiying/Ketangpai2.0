@@ -16,19 +16,19 @@ Including another URLconf
 """
 from django.conf.urls import *
 from django.contrib import admin
-from mServer.view import hello
-from testCon.views import staff
+from testCon import views as ketangpai
+from band import views as bandurl
 from . import view
 
 urlpatterns = [
-    url(r'^hello/$',view.hello,name = 'hello'),
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^fff/$',view.fff,name = 'fff'),
 	url(r'^testCon/',include('testCon.urls')),
 	url(r'^check/',view.check,name = 'check'),
 	url(r'^register/',view.register,name = 'register'),
 	url(r'^register_teacher/',view.register_teacher,name = 'register_teacher'),
 	url(r'^check_teacher/',view.check_teacher,name = 'check_teacher'),
+	url(r'^staff/',ketangpai.staff,name = 'staff'),
+	url(r'login/',bandurl.login,name = 'login'),
 ]
 
 

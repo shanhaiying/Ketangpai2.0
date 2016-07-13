@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'testCon',
+	'band',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -81,7 +82,7 @@ DATABASES = {
         'NAME': 'test',
         'USER': 'root',
         'PASSWORD':'caijiahao',
-        'HOST': '127.0.0.1',#192.168.134.148
+        'HOST': 'localhost',#192.168.134.148
         'PORT':'3306',
     }
 }

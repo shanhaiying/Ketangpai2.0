@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableRow;
 
 import james.com.demo.R;
 
@@ -14,6 +15,7 @@ public class AboutActivity extends Activity implements View.OnClickListener{
     Button message;
     Button announce;
     Button about;
+    TableRow personalInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,8 @@ public class AboutActivity extends Activity implements View.OnClickListener{
         message = (Button)findViewById(R.id.messages);
         announce = (Button)findViewById(R.id.announcement);
         about = (Button)findViewById(R.id.about);
+        personalInfo = (TableRow)findViewById(R.id.personInfo);
+        personalInfo.setOnClickListener(this);
         course.setOnClickListener(this);
         message.setOnClickListener(this);
         announce.setOnClickListener(this);
@@ -58,13 +62,9 @@ public class AboutActivity extends Activity implements View.OnClickListener{
                 finish();
                 startActivity(intent2);
                 break;
-            case R.id.join_class:
-                break;
-            case R.id.logout:
-                Intent intent3 = new Intent(v.getContext(),LoginActivity.class);
-                finish();
+            case R.id.personInfo:
+                Intent intent3 = new Intent(v.getContext(),PersonalInfoShowActivity.class);
                 startActivity(intent3);
-                break;
         }
     }
 }

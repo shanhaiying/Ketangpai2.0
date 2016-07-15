@@ -22,6 +22,9 @@
         <activity android:name=".UI.AboutActivity"/>
         <activity android:name=".UI.AnnounceActivity"/>
         <activity android:name=".UI.MessageActivity"/>
+        <activity android:name=".UI.PersonalInfoEditActivity"/>
+        <activity android:name=".UI.PersonalInfoShowActivity"/>
+        <activity android:name=".UI.T_BaseActivity"/>
     </application>
 
 </manifest>

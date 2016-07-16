@@ -38,3 +38,10 @@
 (password encrypt as MD5 before sending to the server and saved as MD5 in the database)
 
 * Login as Teacher
+
+### Jul 16, 2016
+*the following functions have been added*
+
+* save and change personal information
+
+* Teacher can create course now

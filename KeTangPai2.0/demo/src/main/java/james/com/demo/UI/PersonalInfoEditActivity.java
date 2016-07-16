@@ -39,7 +39,7 @@ public class PersonalInfoEditActivity extends Activity {
     }
     protected void setPersonal(){//设置个人信息
         SharedPreferences.Editor editor = getSharedPreferences("personal_data",MODE_PRIVATE).edit();
-        editor.putString("nickname",nickname.getText().toString());
+        editor.putString("teacherName", nickname.getText().toString());
         editor.putString("phone_number",phone_number.getText().toString());
         editor.putString("mail",mail.getText().toString());
         editor.putString("address",address.getText().toString());
@@ -48,7 +48,7 @@ public class PersonalInfoEditActivity extends Activity {
     }
     protected void showPersonal(){//读取文件中的个人信息
         SharedPreferences pref = getSharedPreferences("personal_data", MODE_PRIVATE);
-        nickname.setText(pref.getString("nickname", "尚未填写"));
+        nickname.setText(pref.getString("teacherName", "尚未填写"));
         phone_number.setText(pref.getString("phone_number", "尚未填写"));
         mail.setText(pref.getString("mail", "尚未填写"));
         address.setText(pref.getString("address", "尚未填写"));

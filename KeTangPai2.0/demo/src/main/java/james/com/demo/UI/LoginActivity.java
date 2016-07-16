@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import james.com.demo.Data.SymBol;
 import james.com.demo.Data.URL;
 import james.com.demo.R;
 import james.com.demo.Util.MD5;
@@ -41,7 +42,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     SharedPreferences.Editor editor;
     String encryptPassword;
     CheckBox isTeacher;
-    private final int RETURN_SYMBOL = 1;
     private String signal = "result";//存储服务器端返回的结果
     public static LoginActivity loginActivity = null;
     @Override
@@ -118,7 +118,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String answer = null;
-                if (msg.what == RETURN_SYMBOL)
+                if (msg.what == SymBol.RETURN_SUCCESS)
                 {
                     Bundle bundle = msg.getData();
                     answer = bundle.getString("result");
@@ -154,9 +154,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                         editor.putString("password",password);
                         editor.apply();
                     }
-                    Intent intent = new Intent(loginActivity,BaseActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (isTeacher.isChecked()){//判定应跳转到哪个主页面
+                        Intent intent = new Intent(loginActivity,T_BaseActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Intent intent = new Intent(loginActivity,BaseActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }else if (answer.equals("not_exist")){
                     Toast.makeText(loginActivity,"账号不存在",Toast.LENGTH_SHORT).show();
                     mUsername.setText("");
@@ -209,7 +215,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                                             Bundle bundle = new Bundle();
                                             bundle.putString("result", signal);
                                             msg.setData(bundle);
-                                            msg.what = RETURN_SYMBOL;
+                                            msg.what = SymBol.RETURN_SUCCESS;
                                             handler.sendMessage(msg);
                                         } catch (JSONException e)
                                         {
@@ -247,7 +253,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                                             Bundle bundle = new Bundle();
                                             bundle.putString("result", signal);
                                             msg.setData(bundle);
-                                            msg.what = RETURN_SYMBOL;
+                                            msg.what = SymBol.RETURN_SUCCESS;
                                             handler.sendMessage(msg);
                                         } catch (JSONException e)
                                         {

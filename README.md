@@ -44,4 +44,4 @@
 
 * save and change personal information
 
-* Teacher can create course now
+* Teacher can create course NOW

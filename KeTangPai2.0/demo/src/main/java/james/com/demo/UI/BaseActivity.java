@@ -74,16 +74,8 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     管理课程信息
      */
     private void initClassInfo(){
-        ClassInfo Android = new ClassInfo("Android","James");
+        ClassInfo Android = new ClassInfo("Android","James","test123");
         classList.add(Android);
-        ClassInfo Python = new ClassInfo("Python","James");
-        classList.add(Python);
-        ClassInfo Linux = new ClassInfo("Linux","James");
-        classList.add(Linux);
-        ClassInfo Assembly = new ClassInfo("Assemble","James");
-        classList.add(Assembly);
-        ClassInfo HeadFirst = new ClassInfo("HeadFirst","James");
-        classList.add(HeadFirst);
     }
 
     public void onClick(View v) {

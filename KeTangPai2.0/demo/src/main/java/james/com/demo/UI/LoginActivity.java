@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import james.com.demo.Data.Account;
 import james.com.demo.Data.SymBol;
 import james.com.demo.Data.URL;
 import james.com.demo.R;
@@ -184,13 +185,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 mQueue = Volley.newRequestQueue(LoginActivity.loginActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
-                /*
-                加盐 两次MD5 增加破解难度
-                 */
-                encryptPassword = MD5.getMD5(MD5.getMD5("hello" + password + "world"));
+                Account account = new Account(username,password);
                 try
                 {
-                    jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");
+                    jsonObject = new JSONObject(account.toString());
                     Log.d("Sending_Message", jsonObject.toString());
                 } catch (Exception e)
                 {

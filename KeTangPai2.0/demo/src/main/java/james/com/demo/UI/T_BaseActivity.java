@@ -120,16 +120,8 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
     管理课程信息
      */
     private void initClassInfo() {
-        ClassInfo Android = new ClassInfo("Android", "James");
+        ClassInfo Android = new ClassInfo("Android", "James","test123");
         classList.add(Android);
-        ClassInfo Python = new ClassInfo("Python", "James");
-        classList.add(Python);
-        ClassInfo Linux = new ClassInfo("Linux", "James");
-        classList.add(Linux);
-        ClassInfo Assembly = new ClassInfo("Assemble", "James");
-        classList.add(Assembly);
-        ClassInfo HeadFirst = new ClassInfo("HeadFirst", "James");
-        classList.add(HeadFirst);
     }
 
     public void onClick(View v) {
@@ -208,14 +200,8 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void run() {
-                /*
-                产生一个随机的6位字符串
-                 */
-                String tempCode = MD5.getMD5(new Random().nextInt(10000000) + "hello");
-                String inviteCode;
-                Random random = new Random();
-                int randomLength = random.nextInt(25);
-                inviteCode = tempCode.substring(randomLength,randomLength + 6);
+                ClassInfo classInfo = new ClassInfo(className,teacherName,username);
+                classInfo.setInviteCode();
                 /*
                 处理用户名未添加的情况
                  */
@@ -230,7 +216,7 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
                 JSONObject jsonObject = null;
                 try
                 {
-                    jsonObject = new JSONObject("{username:" + username + ",teacherName:" + teacherName + ",className:" + className + ",inviteCode:" + inviteCode + "}");
+                    jsonObject = new JSONObject(classInfo.toString());
                     Log.d("Sending_Message", jsonObject.toString());
                 } catch (Exception e)
                 {

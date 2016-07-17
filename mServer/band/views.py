@@ -30,5 +30,26 @@ def login(request):
 			dict["result"] = "error"
 			return JsonResponse(dict)#密码不正确
 	else:
-		return HttpResponse("Working")
+		return HttpResponse("It is band Working")
 
+	
+def band_register(request):
+	if request.method == 'POST':
+		recv = simplejson.loads(request.body)
+		musername = recv["username"]
+		mpassword = recv["password"]
+		try:
+			key = Account.objects.get(username = musername).__unicode__()
+			dict = {}
+			dict["result"] = "already_exist"
+			return JsonResponse(dict)
+		except Account.DoesNotExist:
+			#hash_md5 = hashlib.md5(str(mpassword))
+			#encrypt_password = hash_md5.hexdigest()
+			account = Account(username = musername,password = mpassword)
+			account.save()
+			dict = {}
+			dict["result"] = "success"
+			return JsonResponse(dict)
+	else:
+		return HttpResponse("band is Working")

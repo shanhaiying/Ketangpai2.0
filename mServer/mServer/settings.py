@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'mServer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'ketangpai',
         'USER': 'root',
         'PASSWORD':'caijiahao',
         'HOST': 'localhost',#192.168.134.148

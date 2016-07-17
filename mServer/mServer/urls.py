@@ -23,12 +23,17 @@ from . import view
 urlpatterns = [
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^testCon/',include('testCon.urls')),
-	url(r'^check/',view.check,name = 'check'),
-	url(r'^register/',view.register,name = 'register'),
-	url(r'^register_teacher/',view.register_teacher,name = 'register_teacher'),
-	url(r'^check_teacher/',view.check_teacher,name = 'check_teacher'),
+	url(r'^check/',ketangpai.check,name = 'check'),
+	url(r'^register/',ketangpai.register,name = 'register'),
+	url(r'^register_teacher/',ketangpai.register_teacher,name = 'register_teacher'),
+	url(r'^check_teacher/',ketangpai.check_teacher,name = 'check_teacher'),
 	url(r'^staff/',ketangpai.staff,name = 'staff'),
+	url(r'^create_course/',ketangpai.create_course,name = 'create_course'),
+	
+	
+	
 	url(r'login/',bandurl.login,name = 'login'),
+	url(r'band_register/',bandurl.band_register,name = 'band_register'),
 ]
 
 

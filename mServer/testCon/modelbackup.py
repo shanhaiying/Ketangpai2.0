@@ -16,15 +16,15 @@ from django.db import models
 #以下是学生登录信息表
 #主要信息有 1.账号  2.密码
 class Account(models.Model):
-	username = models.CharField(max_length = 20,unique = True)
+	username = models.CharField(max_length = 20,primary_key = True)
 	password = models.CharField(max_length = 40)
 	def __unicode__(self):
 		return self.password
 		
 #下面是课程信息表
-#主要信息有 1.课程名称 2.任课教师 3.课程邀请码 4.教师用户名
+#主要信息有 1.课程名称 2.任课教师 3.课程邀请码 4.教师用户名(外键)
 class ClassInfo(models.Model):
-	username = models.CharField(max_length = 20)
+	username = models.ForeignKey('Account_Teacher','username')
 	className = models.CharField(max_length = 20,unique = True)
 	teacherName = models.CharField(max_length = 10)
 	inviteCode = models.CharField(max_length = 10)
@@ -38,15 +38,15 @@ class ClassInfo(models.Model):
 #下面是教师登录信息表
 #主要信息有	1.账号	2.密码	3.姓名
 class Account_Teacher(models.Model):
-	username = models.CharField(max_length = 20,unique = True)
+	username = models.CharField(max_length = 20,primary_key = True)
 	password = models.CharField(max_length = 40)
 	def __unicode__(self):
 		return self.password
 
 #下面是学生个人信息表
-#主要信息有 1.账号信息 2.学生姓名 3.出生日期 4.所属班级 5.性别 6.学号
+#主要信息有 1.账号信息(外键) 2.学生姓名 3.出生日期 4.所属班级 5.性别 6.学号
 class Student_Info(models.Model):
-	username = models.CharField(max_length = 20)
+	username = models.ForeignKey('Account','username')
 	StuName = models.CharField(max_length = 20)
 	Birthday = models.DateField()	#date_joined=date(1962, 8, 16)
 	ClassBelong = models.CharField(max_length = 20)
@@ -64,10 +64,11 @@ class Student_Info(models.Model):
 		return self.StuId
 
 #下面是学生选课信息表
-#主要信息有 1.学生账号信息 2.学生归属课程
+#主要信息有 1.学生账号信息(外键) 2.学生学号信息(外键) 3.学生归属课程(外键)
 class Course_Pick(models.Model):
-	StuId = models.CharField(max_length = 20)
-	className = models.CharField(max_length = 30)
+	username = models.ForeignKey('Account','username')
+	StuId = models.ForeignKey('Student_Info','StuId')
+	className = models.ForeignKey('ClassInfo','className')
 	def getStuId(self):
 		return self.StuId
 	def getClassName(self):

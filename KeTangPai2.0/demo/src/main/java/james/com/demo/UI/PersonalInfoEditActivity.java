@@ -4,10 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import james.com.demo.Data.Profile;
+import james.com.demo.Data.SymBol;
+import james.com.demo.Data.URL;
 import james.com.demo.R;
+import james.com.demo.Util.MD5;
+import james.com.demo.Util.Utils;
 
 public class PersonalInfoEditActivity extends Activity {
     Button save;
@@ -16,6 +36,9 @@ public class PersonalInfoEditActivity extends Activity {
     EditText mail;//mail
     EditText address;//address
     EditText sex;
+    RequestQueue mQueue;
+    SharedPreferences getAccount;
+    public static PersonalInfoEditActivity personalInfoEditActivity = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -26,6 +49,9 @@ public class PersonalInfoEditActivity extends Activity {
         mail = (EditText)findViewById(R.id.mail);
         address = (EditText)findViewById(R.id.address);
         sex = (EditText)findViewById(R.id.my_sex);
+        personalInfoEditActivity = PersonalInfoEditActivity.this;
+        getAccount = getSharedPreferences("login_data",MODE_PRIVATE);
+        mQueue = Volley.newRequestQueue(PersonalInfoEditActivity.personalInfoEditActivity);
         showPersonal();
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +71,94 @@ public class PersonalInfoEditActivity extends Activity {
         editor.putString("address",address.getText().toString());
         editor.putString("sex", sex.getText().toString());
         editor.apply();
+        Profile profile = new Profile();
+        profile.setUsername(getAccount.getString("username","error"));
+        profile.setSex(sex.getText().toString());
+        //profile.setStuId();
+        profile.set
+
+
+
+                //Todo~~~
+        if (!Utils.isNetworkAvailable(personalInfoEditActivity)){
+            Toast.makeText(personalInfoEditActivity, "网络不可用", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                super.handleMessage(msg);
+                String answer = null;
+                if (msg.what == SymBol.RETURN_SUCCESS)
+                {
+                    Bundle bundle = msg.getData();
+                    answer = bundle.getString("result");
+                }
+                if (answer == null){
+                    Toast.makeText(personalInfoEditActivity, "未知错误", Toast.LENGTH_SHORT).show();
+                }else if (answer.equals("success")){
+                    Toast.makeText(personalInfoEditActivity,"注册成功!",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(personalInfoEditActivity,PersonalInfoShowActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mQueue = Volley.newRequestQueue(RegisterActivity.registerActivity);
+                JsonObjectRequest jsonRequest;
+                JSONObject jsonObject = null;
+                try
+                {
+                    jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");
+                    Log.d("Sending_Message", jsonObject.toString());
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+//发送post请求
+                try
+                {
+                    jsonRequest = new JsonObjectRequest(
+                            Request.Method.POST, URL.URL_REGISTER_STUDENT, jsonObject,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    //发送jsonObject 并在返回成功的回调里处理结果
+                                    try
+                                    {
+                                        signal = response.getString("result");
+                                        Log.d("Response_Message", response.toString());
+                                        Log.d("Extract_result", signal);
+                                        Message msg = new Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("result", signal);
+                                        msg.setData(bundle);
+                                        msg.what = SUCCESS_SYMBOL;
+                                        handler.sendMessage(msg);
+                                    } catch (JSONException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError arg0) {
+                            Log.d("Failure_Message", arg0.toString());
+                        }
+                    });
+                    mQueue.add(jsonRequest);
+                    Log.d("The_Whole_JsonRequest", jsonRequest.toString());
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                mQueue.start();
+            }
+        }).start();
     }
     protected void showPersonal(){//读取文件中的个人信息
         SharedPreferences pref = getSharedPreferences("personal_data", MODE_PRIVATE);

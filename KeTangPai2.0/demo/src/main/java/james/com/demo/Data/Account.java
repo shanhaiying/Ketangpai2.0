@@ -11,6 +11,7 @@ public class Account {
         username = mUsername;
         password = encryptPassword(mPassword);
     }
+    public Account(){}
     public void setUsername(String mUsername){
         username = mUsername;
     }

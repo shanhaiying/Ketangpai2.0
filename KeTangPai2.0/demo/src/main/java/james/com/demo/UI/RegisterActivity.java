@@ -21,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import james.com.demo.Data.Account;
+import james.com.demo.Data.SymBol;
 import james.com.demo.Data.URL;
 import james.com.demo.R;
 import james.com.demo.Util.MD5;
@@ -38,7 +40,6 @@ public class RegisterActivity extends Activity{
     String confirm;
     String signal;
     String encryptPassword;
-    final int SUCCESS_SYMBOL = 1;
     public static RegisterActivity registerActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -72,6 +73,7 @@ public class RegisterActivity extends Activity{
     private void tryRegister_Student(){
         if (!Utils.isNetworkAvailable(registerActivity)){
             Toast.makeText(registerActivity, "网络不可用", Toast.LENGTH_SHORT).show();
+            return;
         }
         username = mUsername.getText().toString();
         password = mPassword.getText().toString();
@@ -97,7 +99,7 @@ public class RegisterActivity extends Activity{
         public void handleMessage(Message msg){
                 super.handleMessage(msg);
                 String answer = null;
-                if (msg.what == SUCCESS_SYMBOL)
+                if (msg.what == SymBol.RETURN_SUCCESS)
                 {
                     Bundle bundle = msg.getData();
                     answer = bundle.getString("result");
@@ -122,13 +124,16 @@ public class RegisterActivity extends Activity{
                 mQueue = Volley.newRequestQueue(RegisterActivity.registerActivity);
                 JsonObjectRequest jsonRequest;
                 JSONObject jsonObject = null;
+                Account account = new Account();
+                account.setPassword(password);
+                account.setUsername(username);
                 /*
                 加盐 两次MD5 增加破解难度
                  */
                 encryptPassword = MD5.getMD5(MD5.getMD5("hello" + password + "world"));
                 try
                 {
-                    jsonObject = new JSONObject("{username:" + username + ",password:" + encryptPassword + "}");
+                    jsonObject = new JSONObject(account.toString());
                     Log.d("Sending_Message", jsonObject.toString());
                 } catch (Exception e)
                 {
@@ -152,7 +157,7 @@ public class RegisterActivity extends Activity{
                                         Bundle bundle = new Bundle();
                                         bundle.putString("result", signal);
                                         msg.setData(bundle);
-                                        msg.what = SUCCESS_SYMBOL;
+                                        msg.what = SymBol.RETURN_SUCCESS;
                                         handler.sendMessage(msg);
                                     } catch (JSONException e)
                                     {

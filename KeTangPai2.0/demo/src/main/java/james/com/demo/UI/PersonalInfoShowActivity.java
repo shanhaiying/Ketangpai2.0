@@ -37,6 +37,9 @@ public class PersonalInfoShowActivity extends Activity{
             }
         });
     }
+    /*
+    个人信息直接从本地读取
+     */
     protected void showPersonal(){
         SharedPreferences pref = getSharedPreferences("personal_data",MODE_PRIVATE);
         nickname.setText(pref.getString("nickname","尚未填写"));

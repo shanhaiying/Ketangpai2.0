@@ -11,6 +11,7 @@ public class Profile {
     private String classBelong;
     private String sex;
     private String stuId;
+    private String birthday;
     public Profile(){}//懒得写构造函数了
     public void setUsername(String mUsername){
         this.username = mUsername;
@@ -19,6 +20,9 @@ public class Profile {
         this.year = mYear;
         this.month = mMouth;
         this.day = mDay;
+    }
+    public void setBirthday(String time){
+        birthday = time;
     }
     public void setClassBelong(String mClassBelong){
         this.classBelong = mClassBelong;
@@ -35,11 +39,13 @@ public class Profile {
     public String getBirthday(){
         return year + "," + month + "," + day;
     }
+    public String getBirthday(int wholeStyle){
+        return birthday;
+    }
     //主要信息有 1.账号信息 2.学生姓名 3.出生日期 4.所属班级 5.性别 6.学号
     @Override
     public String toString(){
-        return "{username:" + username + ",stuName:" + stuName + ",birthday:" + getBirthday() + ",classBelong:" + classBelong + ",sex:" + sex + ",stuId:" + stuId
-      + "}";
+        return "{username:" + username + ",stuName:" + stuName + ",birthday:" + getBirthday(1) + ",class_belong:" + classBelong + ",sex:" + sex + ",stuID:" + stuId + "}";
     }
 
 }

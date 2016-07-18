@@ -78,9 +78,9 @@
             android:textColor="#000000"
             android:layout_marginLeft="15dip"
             android:textSize="20sp"
-            android:text="性别:"/>
+            android:text="学号:"/>
         <EditText
-            android:id="@+id/my_sex"
+            android:id="@+id/stu_ID_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
@@ -103,9 +103,9 @@
             android:textColor="#000000"
             android:layout_marginLeft="15dip"
             android:textSize="20sp"
-            android:text="手机:"/>
+            android:text="所属班级:"/>
         <EditText
-            android:id="@+id/phone_number"
+            android:id="@+id/class_belong_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
@@ -129,9 +129,9 @@
             android:textColor="#000000"
             android:layout_marginLeft="15dip"
             android:textSize="20sp"
-            android:text="邮箱:"/>
+            android:text="性别:"/>
         <EditText
-            android:id="@+id/mail"
+            android:id="@+id/my_sex_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
@@ -154,9 +154,9 @@
             android:textColor="#000000"
             android:layout_marginLeft="15dip"
             android:textSize="20sp"
-            android:text="地址:"/>
+            android:text="出生日期:"/>
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/birthday_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"

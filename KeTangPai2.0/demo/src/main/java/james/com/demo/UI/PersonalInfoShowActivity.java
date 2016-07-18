@@ -11,22 +11,16 @@ import james.com.demo.R;
 
 public class PersonalInfoShowActivity extends Activity{
     Button edit;
-    TextView nickname;//nickname
-    TextView phone_number;//phone_number
-    TextView mail;//mail
-    TextView address;//address
-    TextView sex;//sex
+    TextView nickname;
+    TextView stuID;
+    TextView classBelong;
+    TextView sex;
+    TextView birthday;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info_show);
-        edit = (Button)findViewById(R.id.edit_profile);
-        edit.getBackground().setAlpha(0);
-        nickname = (TextView)findViewById(R.id.nickname);
-        phone_number = (TextView)findViewById(R.id.phone_number);
-        mail = (TextView)findViewById(R.id.mail);
-        address = (TextView)findViewById(R.id.address);
-        sex = (TextView)findViewById(R.id.my_sex);
+        initWidget();
         showPersonal();
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,10 +36,19 @@ public class PersonalInfoShowActivity extends Activity{
      */
     protected void showPersonal(){
         SharedPreferences pref = getSharedPreferences("personal_data",MODE_PRIVATE);
-        nickname.setText(pref.getString("nickname","尚未填写"));
-        phone_number.setText(pref.getString("phone_number","尚未填写"));
-        mail.setText(pref.getString("mail","尚未填写"));
-        address.setText(pref.getString("address", "尚未填写"));
+        nickname.setText(pref.getString("nickname", "尚未填写"));
+        classBelong.setText(pref.getString("class_belong", "尚未填写"));
         sex.setText(pref.getString("sex", "尚未填写"));
+        stuID.setText(pref.getString("stuID", "尚未填写"));
+        birthday.setText(pref.getString("birthday", "尚未填写"));
+    }
+    private void initWidget(){
+        edit = (Button)findViewById(R.id.edit_profile);
+        edit.getBackground().setAlpha(0);
+        nickname = (TextView)findViewById(R.id.nickname);
+        classBelong = (TextView)findViewById(R.id.class_belong);
+        sex= (TextView)findViewById(R.id.my_sex);
+        birthday = (TextView)findViewById(R.id.birthday);
+        stuID = (TextView)findViewById(R.id.stu_ID);
     }
 }

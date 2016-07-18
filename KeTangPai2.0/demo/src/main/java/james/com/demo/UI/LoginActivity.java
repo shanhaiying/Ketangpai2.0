@@ -123,6 +123,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 {
                     Bundle bundle = msg.getData();
                     answer = bundle.getString("result");
+                }else if (msg.what == SymBol.RETURN_FIAL){
+                    Toast.makeText(loginActivity,"服务器端错误,请稍后再试",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if (answer == null){
                     Toast.makeText(loginActivity,"未知错误",Toast.LENGTH_SHORT).show();
@@ -225,6 +228,11 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             @Override
                             public void onErrorResponse(VolleyError arg0) {
                                 Log.d("Failure_Message", arg0.toString());
+                                Message message = new Message();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("result","server_error");
+                                message.what = SymBol.RETURN_FIAL;
+                                handler.sendMessage(message);
                             }
                         });
                         mQueue.add(jsonRequest);
@@ -263,6 +271,11 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             @Override
                             public void onErrorResponse(VolleyError arg0) {
                                 Log.d("Failure_Message", arg0.toString());
+                                Message message = new Message();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("result","server_error");
+                                message.what = SymBol.RETURN_FIAL;
+                                handler.sendMessage(message);
                             }
                         });
                         mQueue.add(jsonRequest);

@@ -49,9 +49,6 @@ public class PersonalInfoEditActivity extends Activity {
             @Override
             public void onClick(View view) {
                 setPersonal();
-                Intent intent = new Intent(view.getContext(),PersonalInfoShowActivity.class);
-                finish();
-                startActivity(intent);
             }
         });
     }
@@ -92,8 +89,8 @@ public class PersonalInfoEditActivity extends Activity {
                 }else if (answer.equals("success")){
                     Toast.makeText(personalInfoEditActivity,"资料修改成功!!",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(personalInfoEditActivity,PersonalInfoShowActivity.class);
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
                 }
             }
         };

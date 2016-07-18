@@ -41,7 +41,68 @@
             android:layout_gravity="right"
             android:src="@drawable/icon_arrow"
             />
+        </TableRow>
+        <TableRow
+            android:id="@+id/bug_report"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/login_box">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_bug_report"
+                android:text="Bug反馈"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginLeft="25dp"
+                android:textSize="18sp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:src="@drawable/icon_arrow"
+                />
     </TableRow>
+        <TableRow
+            android:id="@+id/check_update"
+            android:background="@drawable/login_box">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_update"
+                android:text="检查更新"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginLeft="25dp"
+                android:textSize="18sp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:src="@drawable/icon_arrow"
+                />
+        </TableRow>
+        <TableRow
+            android:id="@+id/about_author"
+            android:background="@drawable/login_box">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_question_mark"
+                android:text="关于作者"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginLeft="25dp"
+                android:textSize="18sp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:src="@drawable/icon_arrow"
+                />
+        </TableRow>
     </TableLayout>
     <LinearLayout
         android:id="@+id/base_layout"

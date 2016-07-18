@@ -45,3 +45,10 @@
 * save and change personal information
 
 * Teacher can create course NOW
+
+### Jul 18, 2016
+*the following function has been updated*
+
+* personal information can be saved in db
+
+* stupid UI update

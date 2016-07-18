@@ -8,7 +8,5 @@ from testCon.models import Account
 from testCon.models import Account_Teacher
 import simplejson
 import json
-	
-from django.core import serializers
 
 

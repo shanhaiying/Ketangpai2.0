@@ -29,6 +29,7 @@ urlpatterns = [
 	url(r'^check_teacher/',ketangpai.check_teacher,name = 'check_teacher'),
 	url(r'^staff/',ketangpai.staff,name = 'staff'),
 	url(r'^create_course/',ketangpai.create_course,name = 'create_course'),
+	url(r'^save_profile/',ketangpai.save_profile,name = 'save_profile'),#save_profile
 	
 	
 	

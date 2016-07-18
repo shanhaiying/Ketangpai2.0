@@ -48,9 +48,9 @@ class Account_Teacher(models.Model):
 class Student_Info(models.Model):
 	username = models.CharField(max_length = 20)
 	StuName = models.CharField(max_length = 20)
-	Birthday = models.DateField()	#date_joined=date(1962, 8, 16)
+	Birthday = models.DateField()	#date_joined=date(1962, 8, 16)  插入格式可以为'2015,4,3'
 	ClassBelong = models.CharField(max_length = 20)
-	Gender = models.CharField(max_length = 2)
+	Sex = models.CharField(max_length = 10)
 	StuId = models.CharField(max_length = 20,unique = True)
 	def getStuName(self):
 		return self.StuName
@@ -59,7 +59,7 @@ class Student_Info(models.Model):
 	def getClassName(self):
 		return self.ClassBelong
 	def getGender(self):
-		return self.Gender
+		return self.Sex
 	def getID(self):
 		return self.StuId
 

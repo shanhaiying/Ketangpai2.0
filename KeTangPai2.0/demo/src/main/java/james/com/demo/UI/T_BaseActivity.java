@@ -147,9 +147,6 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
                 finish();
                 startActivity(intent2);
                 break;
-            case R.id.join_class:
-                //Intent intent3 = new Intent(this,)
-                break;
             case R.id.logout:
                 Intent intent3 = new Intent(this, LoginActivity.class);
                 finish();
@@ -176,7 +173,7 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what == 1)
+                if (msg.what == SymBol.RETURN_SUCCESS)
                 {
                     Bundle bundle = msg.getData();
                     answer = bundle.getString("result");
@@ -187,7 +184,7 @@ public class T_BaseActivity extends Activity implements View.OnClickListener {
                     }else if (answer.equals("already_exist")){
                         Toast.makeText(T_BaseActivity.t_baseActivity,"该课程已存在!",Toast.LENGTH_SHORT).show();
                     }
-                }else if (msg.what == -1){
+                }else if (msg.what == SymBol.RETURN_FIAL){
                     Toast.makeText(T_BaseActivity.t_baseActivity,"请先输入您的姓名",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(T_BaseActivity.t_baseActivity,"服务器错误,请稍后再试",Toast.LENGTH_SHORT).show();

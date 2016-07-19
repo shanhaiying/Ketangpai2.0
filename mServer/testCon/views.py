@@ -12,6 +12,7 @@ from testCon.models import Account
 from testCon.models import Account_Teacher
 from testCon.models import ClassInfo
 from testCon.models import Student_Info
+from testCon.models import Course_Pick
 import simplejson
 from django.db.models import *
 
@@ -198,7 +199,61 @@ Django 如何知道是UPDATE 还是INSERT
 在Django 1.5 和更早的版本中，在设置主键的值时，Django 会作一个 SELECT。如果SELECT 找到一行，那么Django 执行UPDATE，否则执行INSERT。旧的算法导致UPDATE 情况下多一次查询。有极少数的情况，数据库不会报告有一行被更新，即使数据库包含该对象的主键值。有个例子是PostgreSQL 的ON UPDATE 触发器，它返回NULL。在这些情况下，可能要通过将select_on_save 选项设置为True 以启用旧的算法。
 '''
 	
+#选课的流程
+#前台输入邀请码 后台根据邀请码去课程情况表中查找 若没有则返回错误信息
+#查到课程名称后 拿课程名称+学号信息到选课表中去查 若查到则返回已选信息 若没查到则插入数据再返回成功信息
+def pick_course(request):
+    if request.method == 'POST':
+        dict = {}
+        dict["result"] = "success"
+        return JsonResponse(dict)
 	
+    else:
+	return HttpResponse("Working")
+
+
+
+#查询选课情况的流程
+#主界面初始化时应该查询已选课程信息 通过学号查询选课表 若没查到则返回错误信息(没有选课) 返回一个查询集QuerySet 遍历此查询集 返回结果
+
+'''
+如何遍历QuerySet?
+a = Entry.objects.all()
+for e in a:
+    print (e.headline)
+'''
+
+
+#签到的流程(教师端)
+#教师在前台生成一个随机字符串(4-6位)或者二维码 插入签到表中
+
+#签到的流程(学生端)
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	

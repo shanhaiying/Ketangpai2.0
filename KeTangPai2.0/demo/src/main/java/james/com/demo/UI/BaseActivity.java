@@ -33,6 +33,7 @@ import java.util.List;
 
 import james.com.demo.Data.*;
 import james.com.demo.R;
+import james.com.demo.Util.Utils;
 
 public class BaseActivity extends Activity implements View.OnClickListener {
     public static BaseActivity BaseActivity = null;
@@ -47,6 +48,8 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     AlertDialog.Builder builder;
     EditText getInviteCode;
     SharedPreferences getPersonInfo;
+    SharedPreferences.Editor saveCourseInfo;
+    SharedPreferences getCourseInfo;
     BaseActivity baseActivity;
     String signal;
     private List<ClassInfo> classList = new ArrayList<>();
@@ -85,6 +88,8 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         about.setOnClickListener(this);
         joinClass.setOnClickListener(this);
         logout.setOnClickListener(this);
+        saveCourseInfo = getSharedPreferences("course_data",MODE_PRIVATE).edit();
+        getCourseInfo = getSharedPreferences("course_data",MODE_PRIVATE);
         getPersonInfo = getSharedPreferences("personal_data", MODE_PRIVATE);
         baseActivity = BaseActivity.this;
         builder = new AlertDialog.Builder(this);
@@ -113,19 +118,35 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     管理课程信息
      */
     private void initClassInfo(JSONObject response) {
-        try
-        {
-            int sum = Integer.parseInt(response.getString("sum"));
-            Log.d("Course_Sum","The sum is " + sum);
+        if (Utils.isNetworkAvailable(baseActivity)){//网络可用时则从服务器读取数据
+            try
+            {
+                int sum = Integer.parseInt(response.getString("sum"));
+                Log.d("Course_Sum","The sum is " + sum);
+                saveCourseInfo.putInt("sum",sum);
+                for (int i = 0; i < sum; i++)
+                {
+                    saveCourseInfo.putString("course" + i,response.getString("course" + i));
+                    saveCourseInfo.putString("teacher" + i,response.getString("teacher" + i));//将选课数据存储到本地
+                    ClassInfo classInfo = new ClassInfo(response.getString("course" + i),response.getString("teacher" + i));
+                    Log.d("ClassInfo",classInfo.toString());
+                    classList.add(classInfo);
+                }
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }else {//若没有网络则直接从本地读
+            int sum = Integer.parseInt(getCourseInfo.getString("sum","0"));
+            if (sum == 0){
+                return;
+            }
             for (int i = 0; i < sum; i++){
-                ClassInfo classInfo = new ClassInfo(response.getString("course" + i),response.getString("teacher" + i));
-                Log.d("ClassInfo",classInfo.toString());
+                ClassInfo classInfo = new ClassInfo(getCourseInfo.getString("course" + i,"error"),getCourseInfo.getString("teacher" + i,"error"));
                 classList.add(classInfo);
             }
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
         }
+
     }
 
     /*

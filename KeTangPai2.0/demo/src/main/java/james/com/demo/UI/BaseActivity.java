@@ -146,7 +146,6 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 classList.add(classInfo);
             }
         }
-
     }
 
     /*

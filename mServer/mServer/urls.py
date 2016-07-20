@@ -32,6 +32,7 @@ urlpatterns = [
 	url(r'^save_profile/',ketangpai.save_profile,name = 'save_profile'),#save_profile
 	url(r'^pick_course/',ketangpai.pick_course,name = 'pick_course'),
 	url(r'^get_course/',ketangpai.get_course,name = 'get_course'),
+	url(r'^get_course_teacher/',ketangpai.get_course_teacher,name = 'get_course_teacher'),
 	
 	
 	

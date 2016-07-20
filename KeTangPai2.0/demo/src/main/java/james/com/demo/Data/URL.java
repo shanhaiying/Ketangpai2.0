@@ -20,6 +20,7 @@ public class URL {
     public final static String URL_SAVE_PROFILE = "http://10.3.116.146:8000/save_profile/";
     public final static String URL_PICK_COURSE = "http://10.3.116.146:8000/pick_course/";
     public final static String URL_GET_COURSE = "http://10.3.116.146:8000/get_course/";
+    public final static String URL_GET_COURSE_TEACHER = "http://10.3.116.146:8000/get_course_teacher/";
 /*
     //郝老师办公室IP
     public final static String URL_LOGIN_STUDENT = "http://192.168.1.4:8000/check/";

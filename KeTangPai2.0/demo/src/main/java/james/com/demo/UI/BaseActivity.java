@@ -95,7 +95,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                createClass(getInviteCode.getText().toString());
+                joinClass(getInviteCode.getText().toString());
             }
         });
         builder.setNegativeButton("取消", null);
@@ -154,7 +154,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     2.课程邀请码 (通过老师告诉学生)
     其中 要手动的填写的只有 课程邀请码 一项
     */
-    private void createClass(final String inviteCode) {
+    private void joinClass(final String inviteCode) {
         final Handler handler = new Handler() {
             String answer = null;
             @Override
@@ -170,11 +170,13 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                         Toast.makeText(BaseActivity.baseActivity,"课程添加成功",Toast.LENGTH_SHORT).show();
                     }else if (answer.equals("already_exist")){
                         Toast.makeText(BaseActivity.baseActivity,"您已经选了这门课程,请不要重复添加",Toast.LENGTH_SHORT).show();
+                    }else if (answer.equals("not_exist")){
+                        Toast.makeText(BaseActivity.baseActivity,"不存在这门课程,请检查您的邀请码",Toast.LENGTH_SHORT).show();
                     }
-                }else if (msg.what == SymBol.RETURN_FIAL){
+                }else if (msg.what == -1){//-1为特殊情况
                     Toast.makeText(BaseActivity.baseActivity,"请先输入您的学号",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(T_BaseActivity.t_baseActivity,"服务器错误,请稍后再试",Toast.LENGTH_SHORT).show();
+                }else if (msg.what == SymBol.RETURN_FIAL){//失败的回调发出的信息
+                    Toast.makeText(BaseActivity.baseActivity,"服务器错误,请稍后再试",Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -189,7 +191,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                  */
                 if (stuID.equals("error")){
                     Message message = new Message();
-                    message.what = SymBol.RETURN_FIAL;
+                    message.what = -1;//特殊情况
                     handler.sendMessage(message);
                     return;
                 }

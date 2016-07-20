@@ -41,6 +41,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     Button announce;
     Button about;
     TextView joinClass;
+    TextView ifNoCourse;//这个控件是如果没有选课 主页上就显示这个
     ImageView logout;
     RequestQueue mQueue;
     AlertDialog.Builder builder;
@@ -55,15 +56,15 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base);
         initWidget();
-        initClassInfo();
-        ClassAdapter adapter = new ClassAdapter(BaseActivity.this,R.layout.class_item,classList);
-        ListView listView = (ListView)findViewById(R.id.list_view);
+        getCourse();
+        ClassAdapter adapter = new ClassAdapter(BaseActivity.this, R.layout.class_item, classList);
+        ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 ClassInfo classInfo = classList.get(position);
-                Toast.makeText(BaseActivity.this,classInfo.getClassName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseActivity.this, classInfo.getClassName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -77,6 +78,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         about = (Button) findViewById(R.id.about_base);
         joinClass = (TextView) findViewById(R.id.join_class);
         logout = (ImageView) findViewById(R.id.logout);
+        ifNoCourse = (TextView)findViewById(R.id.if_no_course);
         course.setOnClickListener(this);
         message.setOnClickListener(this);
         announce.setOnClickListener(this);
@@ -106,12 +108,132 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent(this, ExitWindow.class);
         startActivity(intent);
     }
+
     /*
     管理课程信息
      */
-    private void initClassInfo(){
-        ClassInfo Android = new ClassInfo("Android","James","test123");
-        classList.add(Android);
+    private void initClassInfo(JSONObject response) {
+        try
+        {
+            int sum = Integer.parseInt(response.getString("sum"));
+            Log.d("Course_Sum","The sum is " + sum);
+            for (int i = 0; i < sum; i++){
+                ClassInfo classInfo = new ClassInfo(response.getString("course" + i),response.getString("teacher" + i));
+                Log.d("ClassInfo",classInfo.toString());
+                classList.add(classInfo);
+            }
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    启动时读取已选课程列表 优先从服务器同步到本地再读取 否则直接读取本地
+    基本方法 先读Json中的result 若为not_exist 则直接返回
+    若为success 则根据Json中的sum选项读取出课程总数
+    然后遍历之
+     */
+    private void getCourse() {
+        final Handler handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String answer;
+                Bundle bundle = msg.getData();
+                answer = bundle.getString("result");
+                if (msg.what == SymBol.RETURN_SUCCESS){//成功的回调
+                    if (answer == null){
+                        Log.v("helloWorld","helloWorld");
+                    }
+                    else if (answer.equals("not_exist")){//如果没选课
+                        ifNoCourse.setText("您尚未选择任何课程");
+                    }
+                } else if (msg.what == -1)
+                {//-1为特殊情况 没填学号
+                    Toast.makeText(BaseActivity.baseActivity, "请先输入您的学号", Toast.LENGTH_SHORT).show();
+                } else if (msg.what == SymBol.RETURN_FIAL)
+                {//失败的回调发出的信息
+                    Toast.makeText(BaseActivity.baseActivity, "课程列表读取错误,请稍后再试", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        new Thread(new Runnable() {
+            String stuID = getPersonInfo.getString("stuID", "error");
+
+            @Override
+            public void run() {
+                /*
+                处理学号未添加的情况
+                此时肯定查不到数据 并不会有bug产生
+                但是为了提醒用户 必须加上这段代码
+                 */
+                if (stuID.equals("error"))
+                {
+                    Message message = new Message();
+                    message.what = -1;
+                    handler.sendMessage(message);
+                    return;
+                }
+                mQueue = Volley.newRequestQueue(baseActivity);
+                JsonObjectRequest jsonRequest;
+                JSONObject jsonObject = null;
+                try
+                {
+                    jsonObject = new JSONObject("{stuID:" + stuID + "}");//请求只发送一个学号就行
+                    Log.d("Sending_Message", jsonObject.toString());
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                //发送post请求
+                try
+                {
+                    jsonRequest = new JsonObjectRequest(
+                            Request.Method.POST, URL.URL_GET_COURSE, jsonObject,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    //发送jsonObject 并在返回成功的回调里处理结果
+                                    try
+                                    {
+                                        signal = response.getString("result");
+                                        Log.d("Response_Message", response.toString());
+                                        if (signal.equals("not_exist")){
+                                            Message msg = new Message();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("result", signal);
+                                            msg.setData(bundle);
+                                            msg.what = SymBol.RETURN_SUCCESS;
+                                            handler.sendMessage(msg);
+                                        }else if (signal.equals("success")){//确实选了课了
+                                            initClassInfo(response);
+                                        }
+
+                                    } catch (JSONException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError arg0) {
+                            Message msg = new Message();
+                            msg.what = SymBol.RETURN_FIAL;
+                            handler.sendMessage(msg);
+                            Log.d("Failure_Message", arg0.toString());
+                        }
+                    });
+                    mQueue.add(jsonRequest);
+                    Log.d("The_Whole_JsonRequest", jsonRequest.toString());
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public void onClick(View v) {
@@ -147,6 +269,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
     /*
     加入班级的基本思路
     发送的数据2项
@@ -157,6 +280,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     private void joinClass(final String inviteCode) {
         final Handler handler = new Handler() {
             String answer = null;
+
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -164,19 +288,25 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 {
                     Bundle bundle = msg.getData();
                     answer = bundle.getString("result");
-                    if (answer == null){
-                        Toast.makeText(BaseActivity.baseActivity,"服务器错误,请稍后再试",Toast.LENGTH_SHORT).show();
-                    } else if (answer.equals("success")){
-                        Toast.makeText(BaseActivity.baseActivity,"课程添加成功",Toast.LENGTH_SHORT).show();
-                    }else if (answer.equals("already_exist")){
-                        Toast.makeText(BaseActivity.baseActivity,"您已经选了这门课程,请不要重复添加",Toast.LENGTH_SHORT).show();
-                    }else if (answer.equals("not_exist")){
-                        Toast.makeText(BaseActivity.baseActivity,"不存在这门课程,请检查您的邀请码",Toast.LENGTH_SHORT).show();
+                    if (answer == null)
+                    {
+                        Toast.makeText(BaseActivity.baseActivity, "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
+                    } else if (answer.equals("success"))
+                    {
+                        Toast.makeText(BaseActivity.baseActivity, "课程添加成功", Toast.LENGTH_SHORT).show();
+                    } else if (answer.equals("already_exist"))
+                    {
+                        Toast.makeText(BaseActivity.baseActivity, "您已经选了这门课程,请不要重复添加", Toast.LENGTH_SHORT).show();
+                    } else if (answer.equals("not_exist"))
+                    {
+                        Toast.makeText(BaseActivity.baseActivity, "不存在这门课程,请检查您的邀请码", Toast.LENGTH_SHORT).show();
                     }
-                }else if (msg.what == -1){//-1为特殊情况
-                    Toast.makeText(BaseActivity.baseActivity,"请先输入您的学号",Toast.LENGTH_SHORT).show();
-                }else if (msg.what == SymBol.RETURN_FIAL){//失败的回调发出的信息
-                    Toast.makeText(BaseActivity.baseActivity,"服务器错误,请稍后再试",Toast.LENGTH_SHORT).show();
+                } else if (msg.what == -1)
+                {//-1为特殊情况 没填学号
+                    Toast.makeText(BaseActivity.baseActivity, "请先输入您的学号", Toast.LENGTH_SHORT).show();
+                } else if (msg.what == SymBol.RETURN_FIAL)
+                {//失败的回调发出的信息
+                    Toast.makeText(BaseActivity.baseActivity, "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -185,11 +315,12 @@ public class BaseActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void run() {
-                CounterPick counterpick = new CounterPick(stuID,inviteCode);
+                CounterPick counterpick = new CounterPick(stuID, inviteCode);
                 /*
                 处理用户名未添加的情况
                  */
-                if (stuID.equals("error")){
+                if (stuID.equals("error"))
+                {
                     Message message = new Message();
                     message.what = -1;//特殊情况
                     handler.sendMessage(message);

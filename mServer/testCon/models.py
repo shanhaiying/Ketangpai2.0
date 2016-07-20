@@ -66,7 +66,7 @@ class Student_Info(models.Model):
 #下面是学生选课信息表
 #主要信息有 1.学生账号信息 2.学生归属课程
 class Course_Pick(models.Model):
-	StuId = models.CharField(max_length = 20)#此处命名不规范 懒得改了
+	StuId = models.CharField(max_length = 20)#此处列名命名不规范 懒得改了 要注意
 	className = models.CharField(max_length = 30)
 	def getStuId(self):
 		return self.stuId

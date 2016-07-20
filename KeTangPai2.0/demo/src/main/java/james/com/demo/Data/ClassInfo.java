@@ -12,7 +12,11 @@ public class ClassInfo {
     private String teacherName;
     private String username;
     private String inviteCode;
-    public ClassInfo(String mClassName, String mTeacherName,String mUsername){
+    public ClassInfo(String mClassName,String mTeacherName){//注意 该构造方法是主页读取课程信息时使用了 无需用户名信息
+        className = mClassName;
+        teacherName = mTeacherName;
+    }
+    public ClassInfo(String mClassName, String mTeacherName,String mUsername){//注意 该构造方法是创建课程时发包使用的
         className = mClassName;
         teacherName = mTeacherName;
         username = mUsername;

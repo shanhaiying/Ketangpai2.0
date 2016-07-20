@@ -204,10 +204,26 @@ Django 如何知道是UPDATE 还是INSERT
 #查到课程名称后 拿课程名称+学号信息到选课表中去查 若查到则返回已选信息 若没查到则插入数据再返回成功信息
 def pick_course(request):
     if request.method == 'POST':
-        dict = {}
-        dict["result"] = "success"
-        return JsonResponse(dict)
-	
+		recv = simplejson.loads(request.body)
+		mStuID = recv["stuID"]
+		mInviteCode = recv["inviteCode"]
+		try:
+			key = ClassInfo.objects.get(inviteCode = mInviteCode)
+			try:
+				finalKey = Course_Pick.objects.get(StuId = mStuID,className = key.className)
+				dict = {}
+				dict["result"] = "already_exist"
+				return JsonResponse(dict)
+			except Course_Pick.DoesNotExist:
+				newPick = Course_Pick(StuId = mStuID,className = key.className)
+				newPick.save()
+				dict = {}
+				dict["result"] = "success"
+				return JsonResponse(dict)
+		except ClassInfo.DoesNotExist:
+			dict = {}
+			dict["result"] = "not_exist"
+			return JsonResponse(dict)
     else:
 	return HttpResponse("Working")
 

@@ -1,6 +1,7 @@
 package james.com.demo.Data;
 
 public class URL {
+    //公网IP
     public final static String URL_LOGIN_STUDENT = "http://123.206.29.111/check/";
     public final static String URL_REGISTER_STUDENT = "http://123.206.29.111/register/";
     public final static String URL_LOGIN_TEACHER = "http://123.206.29.111/check_teacher/";

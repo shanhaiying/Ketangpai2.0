@@ -21,7 +21,7 @@ public class ClassInfo {
         teacherName = mTeacherName;
         username = mUsername;
     }
-    public String inviteCodeGenerate(){
+    public String inviteCodeGenerator(){
         /*
          产生一个随机的6位字符串作为课程邀请码
          */
@@ -32,7 +32,7 @@ public class ClassInfo {
         return inviteCode;
     }
     public void setInviteCode(){
-        inviteCode = inviteCodeGenerate();
+        inviteCode = inviteCodeGenerator();
     }
     public void setClassName(String temp){
         className = temp;

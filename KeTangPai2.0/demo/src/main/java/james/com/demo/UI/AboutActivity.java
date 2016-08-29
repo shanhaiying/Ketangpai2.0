@@ -11,11 +11,11 @@ import james.com.demo.R;
 
 public class AboutActivity extends Activity implements View.OnClickListener{
     public static AboutActivity AboutActivity = null;
-    Button course;
-    Button message;
-    Button announce;
-    Button about;
-    TableRow personalInfo;
+    private Button course;
+    private Button message;
+    private Button announce;
+    private Button about;
+    private TableRow personalInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

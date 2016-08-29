@@ -10,12 +10,12 @@ import android.widget.TextView;
 import james.com.demo.R;
 
 public class PersonalInfoShowActivity extends Activity{
-    Button edit;
-    TextView nickname;
-    TextView stuID;
-    TextView classBelong;
-    TextView sex;
-    TextView birthday;
+    private Button edit;
+    private TextView nickname;
+    private TextView stuID;
+    private TextView classBelong;
+    private TextView sex;
+    private TextView birthday;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -34,7 +34,7 @@ public class PersonalInfoShowActivity extends Activity{
     /*
     个人信息直接从本地读取
      */
-    protected void showPersonal(){
+    private void showPersonal(){
         SharedPreferences pref = getSharedPreferences("personal_data",MODE_PRIVATE);
         nickname.setText(pref.getString("nickname", "尚未填写"));
         classBelong.setText(pref.getString("class_belong", "尚未填写"));

@@ -31,18 +31,18 @@ import james.com.demo.Util.MD5;
 import james.com.demo.Util.Utils;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
-    Button login;
-    Button register;
-    String password;
-    String username;
-    EditText mPassword;
-    EditText mUsername;
-    RequestQueue mQueue;
-    CheckBox rememberPassword;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    String encryptPassword;
-    CheckBox isTeacher;
+    private Button login;
+    private Button register;
+    private String password;
+    private String username;
+    private EditText mPassword;
+    private EditText mUsername;
+    private RequestQueue mQueue;
+    private CheckBox rememberPassword;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private String encryptPassword;
+    private CheckBox isTeacher;
     private String signal = "result";//存储服务器端返回的结果
     public static LoginActivity loginActivity = null;
     @Override

@@ -29,15 +29,15 @@ import james.com.demo.R;
 import james.com.demo.Util.Utils;
 
 public class PersonalInfoEditActivity extends Activity {
-    Button save;
-    EditText nickname;//nickname
-    EditText stuID;//phone_number
-    EditText sex;//mail
-    EditText birthday;//address
-    EditText classBelong;
-    RequestQueue mQueue;
-    SharedPreferences getAccount;
-    String signal;
+    private Button save;
+    private EditText nickname;//nickname
+    private EditText stuID;//phone_number
+    private EditText sex;//mail
+    private EditText birthday;//address
+    private EditText classBelong;
+    private RequestQueue mQueue;
+    private SharedPreferences getAccount;
+    private String signal;
     public static PersonalInfoEditActivity personalInfoEditActivity = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -155,7 +155,7 @@ public class PersonalInfoEditActivity extends Activity {
             }
         }).start();
     }
-    protected void showPersonal(){//读取文件中的个人信息
+    private void showPersonal(){//读取文件中的个人信息
         SharedPreferences pref = getSharedPreferences("personal_data", MODE_PRIVATE);
         nickname.setText(pref.getString("nickname", "尚未填写"));
         classBelong.setText(pref.getString("class_belong", "尚未填写"));

@@ -10,10 +10,10 @@ import james.com.demo.R;
 
 public class AnnounceActivity extends Activity implements View.OnClickListener{
     public static AnnounceActivity AnnounceActivity = null;
-    Button course;
-    Button message;
-    Button announce;
-    Button about;
+    private Button course;
+    private Button message;
+    private Button announce;
+    private Button about;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

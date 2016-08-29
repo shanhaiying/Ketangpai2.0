@@ -37,21 +37,21 @@ import james.com.demo.Util.Utils;
 
 public class BaseActivity extends Activity implements View.OnClickListener {
     public static BaseActivity BaseActivity = null;
-    Button course;
-    Button message;
-    Button announce;
-    Button about;
-    TextView joinClass;
-    TextView ifNoCourse;//这个控件是如果没有选课 主页上就显示这个
-    ImageView logout;
-    RequestQueue mQueue;
-    AlertDialog.Builder builder;
-    EditText getInviteCode;
-    SharedPreferences getPersonInfo;
-    SharedPreferences.Editor saveCourseInfo;
-    SharedPreferences getCourseInfo;
-    BaseActivity baseActivity;
-    String signal;
+    private Button course;
+    private Button message;
+    private Button announce;
+    private Button about;
+    private TextView joinClass;
+    private TextView ifNoCourse;//这个控件是如果没有选课 主页上就显示这个
+    private ImageView logout;
+    private RequestQueue mQueue;
+    private AlertDialog.Builder builder;
+    private EditText getInviteCode;
+    private SharedPreferences getPersonInfo;
+    private SharedPreferences.Editor saveCourseInfo;
+    private SharedPreferences getCourseInfo;
+    private BaseActivity baseActivity;
+    private String signal;
     private List<ClassInfo> classList = new ArrayList<>();
 
     @Override

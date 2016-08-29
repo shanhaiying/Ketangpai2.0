@@ -30,16 +30,16 @@ import james.com.demo.Util.Utils;
 
 //教师注册功能暂不开放
 public class RegisterActivity extends Activity{
-    Button register;
-    EditText mUsername;
-    EditText mPassword;
-    EditText mConfirm;
-    RequestQueue mQueue;
-    String username;
-    String password;
-    String confirm;
-    String signal;
-    String encryptPassword;
+    private Button register;
+    private EditText mUsername;
+    private EditText mPassword;
+    private EditText mConfirm;
+    private RequestQueue mQueue;
+    private String username;
+    private String password;
+    private String confirm;
+    private String signal;
+    private String encryptPassword;
     public static RegisterActivity registerActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState){

@@ -40,22 +40,22 @@ import james.com.demo.Util.Utils;
 
 public class T_BaseActivity extends Activity implements View.OnClickListener {
     public static T_BaseActivity BaseActivity = null;
-    Button course;
-    Button message;
-    Button announce;
-    Button about;
-    TextView joinClass;
-    ImageView logout;
-    RequestQueue mQueue;
-    SharedPreferences getLoginData;
-    SharedPreferences.Editor editClassInfo;
-    SharedPreferences getPersonalInfo;
-    SharedPreferences.Editor saveCourseInfo;
-    SharedPreferences getCourseInfo;
-    AlertDialog.Builder builder;
-    EditText getClassName;
-    TextView ifNoCourse;
-    String signal;
+    private Button course;
+    private Button message;
+    private Button announce;
+    private Button about;
+    private TextView joinClass;
+    private ImageView logout;
+    private RequestQueue mQueue;
+    private SharedPreferences getLoginData;
+    private SharedPreferences.Editor editClassInfo;
+    private SharedPreferences getPersonalInfo;
+    private SharedPreferences.Editor saveCourseInfo;
+    private SharedPreferences getCourseInfo;
+    private AlertDialog.Builder builder;
+    private EditText getClassName;
+    private TextView ifNoCourse;
+    private String signal;
     public static T_BaseActivity t_baseActivity = null;
     private List<ClassInfo> classList = new ArrayList<>();
 

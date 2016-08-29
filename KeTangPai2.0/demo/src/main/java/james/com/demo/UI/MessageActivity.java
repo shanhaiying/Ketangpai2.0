@@ -11,11 +11,11 @@ import james.com.demo.R;
 
 public class MessageActivity extends Activity implements View.OnClickListener{
     public static MessageActivity MessageActivity = null;
-    Button course;
-    Button message;
-    Button announce;
-    Button about;
-    TextView ignore;
+    private Button course;
+    private Button message;
+    private Button announce;
+    private Button about;
+    private TextView ignore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
